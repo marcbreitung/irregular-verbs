@@ -44,3 +44,5 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+sonar-scanner -Dsonar.projectKey=Irregular-Verbs-Trainer -Dsonar.sources=. -Dsonar.host.url=http://localhost:9000 -Dsonar.token=sqp_2f1659103af82cf26b06b1fdf6744b2225c776b7
