@@ -8,6 +8,7 @@ import LearnVerbListen from "./LearnVerbListen";
 import LearnVerbWrite from "./LearnVerbWrite";
 import { useNavigate, useParams } from "react-router-dom";
 import { getVerbByInfinitive, updateLearnProgress } from "../../utils/vocabulary.utils";
+import { AnimatePresence, motion } from "framer-motion";
 
 type LearnVerbProps = {
   verb: VerbType;
@@ -48,9 +49,20 @@ const LearnVerb = ({ verb, dictionaryUrl, onNext, onPrevious }: LearnVerbProps) 
           <ProgressBar value={(learnVerb.correct / (learnVerb.correct + learnVerb.wrong)) * 100} />
         </div>
       </div>
-      {option === "show" && <LearnVerbShow verb={learnVerb} />}
-      {option === "listen" && <LearnVerbListen verb={learnVerb} onUpdateProgress={updateProgressHandler} />}
-      {option === "write" && <LearnVerbWrite verb={learnVerb} onUpdateProgress={updateProgressHandler} />}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={option}
+          initial={{ y: 50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: -50, opacity: 0 }}
+          transition={{ duration: 0.2 }}
+          className="flex-grow flex flex-col justify-between"
+        >
+          {option === "show" && <LearnVerbShow verb={learnVerb} />}
+          {option === "listen" && <LearnVerbListen verb={learnVerb} onUpdateProgress={updateProgressHandler} />}
+          {option === "write" && <LearnVerbWrite verb={learnVerb} onUpdateProgress={updateProgressHandler} />}
+        </motion.div>
+      </AnimatePresence>
       <VerbOptions option={option} onChangeOption={changeOptionHandler} />
     </article>
   );
