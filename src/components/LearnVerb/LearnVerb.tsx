@@ -8,7 +8,6 @@ import LearnVerbListen from "./LearnVerbListen";
 import LearnVerbWrite from "./LearnVerbWrite";
 import { useNavigate, useParams } from "react-router-dom";
 import { getVerbByInfinitive, updateLearnProgress } from "../../utils/vocabulary.utils";
-import { v5 } from "uuid";
 
 type LearnVerbProps = {
   verb: VerbType;
@@ -37,6 +36,10 @@ const LearnVerb = ({ verb, dictionaryUrl, onNext, onPrevious }: LearnVerbProps) 
     setOption(optionId as OptionType);
   }, [optionId]);
 
+  useEffect(() => {
+    setLearnVerb(verb);
+  }, [verb]);
+
   return (
     <article className="flex-grow flex flex-col justify-between">
       <div className="flex-grow flex flex-col justify-center">
@@ -46,7 +49,7 @@ const LearnVerb = ({ verb, dictionaryUrl, onNext, onPrevious }: LearnVerbProps) 
         </div>
       </div>
       {option === "show" && <LearnVerbShow verb={learnVerb} />}
-      {option === "listen" && <LearnVerbListen verb={learnVerb} />}
+      {option === "listen" && <LearnVerbListen verb={learnVerb} onUpdateProgress={updateProgressHandler} />}
       {option === "write" && <LearnVerbWrite verb={learnVerb} onUpdateProgress={updateProgressHandler} />}
       <VerbOptions option={option} onChangeOption={changeOptionHandler} />
     </article>

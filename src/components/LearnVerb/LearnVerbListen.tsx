@@ -6,13 +6,13 @@ import { VerbType } from "../../model/app.model";
 import { SettingsContext } from "../../store/settings-context";
 import ButtonIcon from "../UI/Button/ButtonIcon";
 import VerbItem, { StatusType } from "../UI/Verb/VerbItem";
-import { updateLearnProgress } from "../../utils/vocabulary.utils";
 
 type LearnVerbListenProps = {
   verb: VerbType;
+  onUpdateProgress: (verb: VerbType, status: boolean) => void;
 };
 
-const LearnVerbListen = ({ verb }: LearnVerbListenProps) => {
+const LearnVerbListen = ({ verb, onUpdateProgress }: LearnVerbListenProps) => {
   const { voice } = useContext(SettingsContext);
   const [currentTense, setCurrentTense] = useState<string>("infinitive");
   const [isValidated, setIsValidated] = useState<boolean>(false);
@@ -53,7 +53,7 @@ const LearnVerbListen = ({ verb }: LearnVerbListenProps) => {
       enteredInfinitive === verb.infinitive &&
       enteredPastSimple === verb.pastSimple &&
       enteredPastParticiple === verb.pastParticiple;
-    updateLearnProgress(verb, overallStatus);
+    onUpdateProgress(verb, overallStatus);
   };
 
   const listenVerbs = () => {
